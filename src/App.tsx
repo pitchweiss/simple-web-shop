@@ -1,15 +1,35 @@
 import "./App.css";
 
-import { ExclamationCircleIcon } from "@heroicons/react/24/outline";
+import { useEffect, useState } from "react";
+
+import Header from "./components/Header/Header";
+import ResponsiveGrid from "./components/ResponsiveGrid/ResponsiveGrid";
+import { fetchShopItems } from "./services/shopItemsService";
+import { TShopItem } from "./types/shopItem";
 
 function App() {
+  const [shopItems, setShopItems] = useState<TShopItem[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await fetchShopItems();
+        setShopItems(data);
+      } catch (error) {
+        console.error("Error fetching items:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
-    <div className="">
-      <h1 className="text-black flex flex-row gap-4 items-center">
-        <span>Hello world</span>
-        <ExclamationCircleIcon className="text-red-600 h-4 w-4" />
-      </h1>
-    </div>
+    <>
+      <Header />
+      <main className="py-8">
+        <ResponsiveGrid items={shopItems} />
+      </main>
+    </>
   );
 }
 
