@@ -1,29 +1,40 @@
 import { ShoppingCartIcon } from "@heroicons/react/16/solid";
 import { FC } from "react";
+import { Link } from "react-router-dom";
+import { useShopContext } from "../../context/ShopContext";
 
 interface ICardProps {
+  id: number;
   name: string;
   description: string;
   price: number;
 }
 
-const ShopItemCard: FC<ICardProps> = ({ name, description, price }) => {
+const ShopItemCard: FC<ICardProps> = ({ id, name, description, price }) => {
+  const { addToCart } = useShopContext();
   return (
-    <div className="bg-white rounded-lg shadow p-4 flex flex-col justify-between">
+    <div className="flex flex-col justify-between p-4 rounded-lg shadow bg-dark-purple/40">
       <div>
-        <h3 className="font-bold text-lg truncate">{name}</h3>
-        <p className="text-gray-500 text-sm truncate">${price.toFixed(2)}</p>
+        <Link
+          to={`/product/${id}`}
+          className="text-lg font-bold truncate text-mint-cream hover:text-lime-green hover:cursor-pointer"
+        >
+          {name}
+        </Link>
+        <p className="text-sm text-gray-500 truncate">${price.toFixed(2)}</p>
       </div>
       <div className="mt-4">
-        <p className="text-gray-600 text-sm h-10 line-clamp-2">{description}</p>
+        <p className="h-10 text-sm text-gray-600 line-clamp-2">{description}</p>
       </div>
-      <div className="mt-4 flex items-center justify-between">
-        <span className="text-md">Read more...</span>
-        <button
-          className="text-gray-600 hover:text-gray-900"
-          aria-label="Add to cart"
+      <div className="flex items-center justify-between mt-4">
+        <Link
+          to={`/product/${id}`}
+          className="text-md text-mint-cream hover:text-lime-green hover:cursor-pointer"
         >
-          <ShoppingCartIcon className="h-6 w-6" />
+          Read more...
+        </Link>
+        <button aria-label="Add to cart" onClick={() => addToCart(id)}>
+          <ShoppingCartIcon className="w-6 h-6 text-mint-cream hover:text-lime-green" />
         </button>
       </div>
     </div>

@@ -1,4 +1,4 @@
-export type TShopItem = {
+export interface IShopItem {
   id: number;
   description: string;
   name: string;
@@ -10,4 +10,4 @@ export type TShopItem = {
   specifications: {
     [key: string]: string | number | string[];
   };
-};
+}

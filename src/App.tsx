@@ -1,35 +1,25 @@
 import "./App.css";
 
-import { useEffect, useState } from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import Header from "./components/Header/Header";
 import ResponsiveGrid from "./components/ResponsiveGrid/ResponsiveGrid";
-import { fetchShopItems } from "./services/shopItemsService";
-import { TShopItem } from "./types/shopItem";
+import ShopItemDetails from "./components/ShopItemDetails/ShopItemDetails";
+import { ShopProvider } from "./context/ShopContext";
 
 function App() {
-  const [shopItems, setShopItems] = useState<TShopItem[]>([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await fetchShopItems();
-        setShopItems(data);
-      } catch (error) {
-        console.error("Error fetching items:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
   return (
-    <>
-      <Header />
-      <main className="py-8">
-        <ResponsiveGrid items={shopItems} />
-      </main>
-    </>
+    <ShopProvider>
+      <BrowserRouter>
+        <Header />
+        <main className="py-8">
+          <Routes>
+            <Route path="/" element={<ResponsiveGrid />} />
+            <Route path="/product/:id" element={<ShopItemDetails />} />
+          </Routes>
+        </main>
+      </BrowserRouter>
+    </ShopProvider>
   );
 }
 

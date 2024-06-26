@@ -1,16 +1,22 @@
 import { FC } from "react";
-import { TShopItem } from "../../types/shopItem";
+import { useShopContext } from "../../context/ShopContext";
 import ShopItemCard from "../ShopItemCard/ShopItemCard";
 
-interface IResponsiveGridProps {
-  items: TShopItem[];
-}
+const ResponsiveGrid: FC = () => {
+  const { shopItems, loading, error } = useShopContext();
 
-const ResponsiveGrid: FC<IResponsiveGridProps> = ({ items }) => {
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
   return (
-    <div className="container mx-auto px-4">
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {items.map((item) => (
+    <div className="container px-4 mx-auto">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        {shopItems.map((item) => (
           <ShopItemCard key={item.id} {...item} />
         ))}
       </div>
