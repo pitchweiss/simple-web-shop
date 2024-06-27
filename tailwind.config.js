@@ -12,6 +12,13 @@ export default {
         "moderate-pink": "#b83b6d",
         "mint-cream": "#eaf2ef",
         "lime-green": "#53fcb9",
+        "purple-heart": "#5d2aef",
+        "pretty-pink": "#ce3686",
+        "very-dark-gray": "5a5a5a",
+        "dark-gray": "#808080",
+        "moderate-gray": "#a6a6a6",
+        "light-gray": "#c1c1c1",
+        "soft-cyan": "#6feff7",
       },
       fontFamily: {
         poppins: ["Poppins", "sans-serif"],

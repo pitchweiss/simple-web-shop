@@ -1,10 +1,10 @@
 import {
-    FC,
-    ReactNode,
-    createContext,
-    useContext,
-    useEffect,
-    useState,
+  FC,
+  ReactNode,
+  createContext,
+  useContext,
+  useEffect,
+  useState,
 } from "react";
 
 import { fetchShopItems } from "../services/shopItemsService";
@@ -16,9 +16,11 @@ interface IShopContextType {
   cart: ICartItem[];
   addToCart: (id: number) => void;
   removeFromCart: (id: number) => void;
+  removeProductFromCart: (id: number) => void;
   loading: boolean;
   error: string | null;
   fetchProduct: (id: string) => IShopItem | undefined;
+  cartCount: number;
 }
 
 const ShopContext = createContext<IShopContextType | undefined>(undefined);
@@ -40,6 +42,7 @@ export const ShopProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [cart, setCart] = useState<ICartItem[]>([]);
+  const [cartCount, setCartCount] = useState<number>(0);
 
   const addToCart = (id: number) => {
     const existingItem = cart.find((item) => item.id === id);
@@ -74,6 +77,15 @@ export const ShopProvider: FC<{ children: ReactNode }> = ({ children }) => {
     }
   };
 
+  const removeProductFromCart = (id: number) => {
+    setCart(cart.filter((item) => item.id !== id));
+  };
+
+  useEffect(() => {
+    const count = cart.reduce((acc, item) => acc + item.quantity, 0);
+    setCartCount(count);
+  }, [cart]);
+
   useEffect(() => {
     const fetchItems = async () => {
       try {
@@ -104,6 +116,8 @@ export const ShopProvider: FC<{ children: ReactNode }> = ({ children }) => {
         cart,
         addToCart,
         removeFromCart,
+        removeProductFromCart,
+        cartCount,
       }}
     >
       {children}

@@ -1,11 +1,12 @@
 // src/components/ProductDetail.tsx
-import { FC, useEffect, useState } from "react";
+import { FC, memo, useEffect, useState } from "react";
 
 import { ShoppingCartIcon } from "@heroicons/react/24/outline";
 import { ChevronRightIcon } from "@heroicons/react/24/solid";
 import { useParams } from "react-router-dom";
 import { useShopContext } from "../../context/ShopContext";
 import { IShopItem } from "../../types/shopItem";
+import Spinner from "../Spinner/Spinner";
 
 const ShopItemDetails: FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -30,7 +31,11 @@ const ShopItemDetails: FC = () => {
   }, [id, fetchProduct]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="container flex flex-row justify-center w-full">
+        <Spinner />
+      </div>
+    );
   }
 
   if (error) {
@@ -49,20 +54,20 @@ const ShopItemDetails: FC = () => {
             {product.name}
           </h1>
           <button
-            className="flex flex-row items-center justify-center gap-2 p-2 rounded-lg bg-palatinate hover:bg-dark-purple text-mint-cream hover:text-lime-green md:gap-4 min-w-32 ld:min-w-36"
+            className="flex flex-row items-center justify-center gap-2 p-2 rounded-lg bg-purple-heart hover:bg-pretty-pink text-mint-cream md:gap-4 min-w-32 ld:min-w-36"
             onClick={() => addToCart(product.id)}
           >
             <ShoppingCartIcon className="w-4 h-4" />
             <span className="text-xs sm:text-sm md:text-base">Add to cart</span>
           </button>
         </div>
-        <div className="flex flex-row gap-8 font-semibold text-md md:text-xl text-lime-green">
+        <div className="flex flex-row gap-8 font-semibold text-md md:text-xl text-soft-cyan">
           <h2>Price:</h2>
           <span> ${product.price}</span>
         </div>
 
         <div className="flex flex-col gap-4">
-          <h3 className="text-sm font-semibold md:text-lg text-moderate-pink">
+          <h3 className="text-sm font-semibold md:text-lg text-pretty-pink">
             Description:
           </h3>
           <p className="text-xs md:text-base text-mint-cream">
@@ -70,7 +75,7 @@ const ShopItemDetails: FC = () => {
           </p>
         </div>
         <div className="flex flex-col gap-4">
-          <h3 className="text-sm font-semibold md:text-lg text-moderate-pink">
+          <h3 className="text-sm font-semibold md:text-lg text-pretty-pink">
             Features
           </h3>
           <ul className="gap-2 pl-4 text-xs text-mint-cream md:text-base">
@@ -82,8 +87,9 @@ const ShopItemDetails: FC = () => {
             ))}
           </ul>
         </div>
+
         <div className="flex flex-col gap-4">
-          <h3 className="text-sm font-semibold md:text-lg text-moderate-pink">
+          <h3 className="text-sm font-semibold md:text-lg text-pretty-pink">
             Specifications
           </h3>
           <ul className="gap-2 pl-4 text-mint-cream">
@@ -101,7 +107,7 @@ const ShopItemDetails: FC = () => {
           </ul>
         </div>
         <div className="flex flex-col gap-4">
-          <h3 className="text-sm font-semibold md:text-lg text-moderate-pink">
+          <h3 className="text-sm font-semibold md:text-lg text-pretty-pink">
             Additional Information
           </h3>
           <ul className="gap-2 pl-4 text-mint-cream">
@@ -123,4 +129,6 @@ const ShopItemDetails: FC = () => {
   );
 };
 
-export default ShopItemDetails;
+const MemoizedShopItemDetails = memo(ShopItemDetails);
+
+export default MemoizedShopItemDetails;

@@ -1,12 +1,17 @@
 import { FC } from "react";
 import { useShopContext } from "../../context/ShopContext";
 import ShopItemCard from "../ShopItemCard/ShopItemCard";
+import Spinner from "../Spinner/Spinner";
 
 const ResponsiveGrid: FC = () => {
   const { shopItems, loading, error } = useShopContext();
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="container flex flex-row justify-center w-full">
+        <Spinner />
+      </div>
+    );
   }
 
   if (error) {
