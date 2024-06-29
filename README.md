@@ -1,30 +1,38 @@
-# React + TypeScript + Vite
+# Kwik-E-Mart Web Shop
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is a simple web shop application built with Vite, React, and TypeScript.
+Since this is a smaller application with simpler state management needs, React Context is used for a lightweight,
+built-in solution without adding extra libraries.
 
-Currently, two official plugins are available:
+## Getting Started
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+To get a local copy up and running, follow these simple steps.
 
-## Expanding the ESLint configuration
+### Installation
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+1. Clone the repository:
+   ```sh
+   git clone git@github.com:pitchweiss/simple-web-shop.git
+   ```
+2. Navigate to the project directory:
 
-- Configure the top-level `parserOptions` property like this:
+   ```sh
+   cd kwik-e-mart-web-shop
+   ```
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+3. Install NPM packages:
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+   ```sh
+   npm install
+   ```
+
+4. Start the development server:
+   ```sh
+   npm run dev
+   ```
+
+### Usage
+
+After starting the development server, you can access the web shop at http://localhost:5173.
+
+Explore the simple web shop, which showcases a minimalistic approach to e-commerce.
