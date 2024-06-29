@@ -5,7 +5,7 @@ import {
   ShoppingCartIcon,
   SparklesIcon,
 } from "@heroicons/react/24/solid";
-import { FC, useEffect, useState } from "react";
+import { FC, useCallback, useMemo, useState } from "react";
 
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
@@ -16,15 +16,18 @@ import { formatTotalPrice } from "../../utils/formatTotalPrice";
 const Header: FC = () => {
   const { cart, addToCart, removeFromCart, removeProductFromCart, cartCount } =
     useShopContext();
-  const [showCartItemNumber, setShowCartItemNumber] = useState<boolean>(
-    cartCount > 0 ? true : false
-  );
   const [open, setOpen] = useState<boolean>(false);
 
-  useEffect(() => {
-    if (cartCount === 0) setShowCartItemNumber(false);
-    if (cartCount > 0 && !open) setShowCartItemNumber(true);
-  }, [cartCount]);
+  const showCartItemNumber = useMemo(
+    () => cartCount > 0 && !open,
+    [cartCount, open]
+  );
+  const totalPrice = useMemo(() => formatTotalPrice(cart), [cart]);
+
+  const toggleCart = useCallback(() => {
+    setOpen((prevVal) => !prevVal);
+    if (cart.length === 0) return;
+  }, [cart.length]);
 
   return (
     <header className="text-mint-cream bg-purple-heart">
@@ -40,11 +43,7 @@ const Header: FC = () => {
         <Popover>
           <PopoverButton
             className="relative flex items-center hover:text-pretty-pink focus:outline-none focus:border-none"
-            onClick={() => {
-              setOpen((prevVal) => !prevVal);
-              if (cart.length === 0) return;
-              setShowCartItemNumber((prevVal) => !prevVal);
-            }}
+            onClick={toggleCart}
           >
             <ShoppingCartIcon className="w-8 h-8" />
             {showCartItemNumber && (
@@ -99,9 +98,7 @@ const Header: FC = () => {
                   <div className="h-[2px] bg-soft-cyan w-full mt-2"></div>
                   <div className="flex flex-row justify-between w-full pt-2">
                     <span>Total price:</span>
-                    <span className="font-semibold text-md">
-                      {formatTotalPrice(cart)}
-                    </span>
+                    <span className="font-semibold text-md">{totalPrice}</span>
                   </div>
                 </div>
               )}

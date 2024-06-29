@@ -12,11 +12,10 @@ const useShopItems = () => {
     const fetchItems = async () => {
       try {
         const data = await fetchShopItems();
-
         setItems(data);
-        setLoading(false);
       } catch (err) {
         setError((err as Error).message);
+      } finally {
         setLoading(false);
       }
     };

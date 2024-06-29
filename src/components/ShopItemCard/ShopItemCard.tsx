@@ -1,6 +1,6 @@
-import { FC, memo } from "react";
+import { FC, memo, useCallback } from "react";
 
-import { ShoppingCartIcon } from "@heroicons/react/16/solid";
+import { ShoppingCartIcon } from "@heroicons/react/24/solid";
 import { Link } from "react-router-dom";
 import { useShopContext } from "../../context/ShopContext";
 
@@ -13,6 +13,11 @@ interface ICardProps {
 
 const ShopItemCard: FC<ICardProps> = ({ id, name, description, price }) => {
   const { addToCart } = useShopContext();
+
+  const handleAddToCart = useCallback(() => {
+    addToCart(id);
+  }, [id, addToCart]);
+
   return (
     <div className="flex flex-col justify-between p-4 rounded-lg shadow bg-dark-gray/40">
       <div>
@@ -38,7 +43,7 @@ const ShopItemCard: FC<ICardProps> = ({ id, name, description, price }) => {
         >
           Read more...
         </Link>
-        <button aria-label="Add to cart" onClick={() => addToCart(id)}>
+        <button aria-label="Add to cart" onClick={handleAddToCart}>
           <ShoppingCartIcon className="w-6 h-6 text-mint-cream hover:text-pretty-pink" />
         </button>
       </div>

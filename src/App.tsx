@@ -1,11 +1,17 @@
 import "./App.css";
 
+import { Suspense, lazy } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import Header from "./components/Header/Header";
-import ResponsiveGrid from "./components/ResponsiveGrid/ResponsiveGrid";
-import ShopItemDetails from "./components/ShopItemDetails/ShopItemDetails";
 import { ShopProvider } from "./context/ShopContext";
+
+const ResponsiveGrid = lazy(
+  () => import("./components/ResponsiveGrid/ResponsiveGrid")
+);
+const ShopItemDetails = lazy(
+  () => import("./components/ShopItemDetails/ShopItemDetails")
+);
 
 function App() {
   return (
@@ -13,10 +19,12 @@ function App() {
       <BrowserRouter>
         <Header />
         <main className="py-8">
-          <Routes>
-            <Route path="/" element={<ResponsiveGrid />} />
-            <Route path="/product/:id" element={<ShopItemDetails />} />
-          </Routes>
+          <Suspense fallback={<div>Loading...</div>}>
+            <Routes>
+              <Route path="/" element={<ResponsiveGrid />} />
+              <Route path="/product/:id" element={<ShopItemDetails />} />
+            </Routes>
+          </Suspense>
         </main>
       </BrowserRouter>
     </ShopProvider>

@@ -1,6 +1,5 @@
+import { usdFormatter } from "./usFormatter";
+
 export const formatPrice = (price: number): string => {
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-  }).format(price);
+  return usdFormatter.format(price);
 };
